@@ -85,12 +85,12 @@ void LoadInfo() {
 	FILE* fp2;
 	Point temp;
 	Point Now=Head;
-	if ((fp2 = fopen("StudentInfo.txt", "r")) == NULL) {
+	if ((fp2 = fopen("StudentInfo.txt", "w+")) == NULL) {
 		printf("\t\t\t		无法打开文件！\n");
 		system("pause");
 		exit(0);
 	}
-	if ((fp1 = fopen("StudentScore.txt", "r")) == NULL) {
+	if ((fp1 = fopen("StudentScore.txt", "w+")) == NULL) {
 		printf("\t\t\t		无法打开文件！\n");
 		system("pause");
 		exit(0);
