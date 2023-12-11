@@ -2,22 +2,22 @@
 #include <process.h>
 #include <string.h>
 #include <windows.h>
-#define Maxnum 100 //´æ´¢µÄ×î´óĞÅÏ¢ÊıÄ¿
+#define Maxnum 100 //å­˜å‚¨çš„æœ€å¤§ä¿¡æ¯æ•°ç›®
 
-//½á¹¹Êı×é£¬ÓÃÓÚ´æ´¢ËùÓĞµÄĞÅÏ¢
+//ç»“æ„æ•°ç»„ï¼Œç”¨äºå­˜å‚¨æ‰€æœ‰çš„ä¿¡æ¯
 struct student {
-	int Num;            //¼ÇÂ¼ĞòºÅ
-	int Idnumber;       //¼ÇÂ¼Ñ§ºÅ
-	char Name[15];      //¼ÇÂ¼ĞÕÃû
-	char Sex[10];		//¼ÇÂ¼ĞÔ±ğ
-	int Age;			//ÄêÁä
-	char Hometown[15];  //¼ÇÂ¼¼ÒÍ¢µØÖ·
-	int Score[6];       //¼ÇÂ¼³É¼¨,ÓïÊıÓ¢Îï»¯Éú
+	int Num;            //è®°å½•åºå·
+	int Idnumber;       //è®°å½•å­¦å·
+	char Name[15];      //è®°å½•å§“å
+	char Sex[10];		//è®°å½•æ€§åˆ«
+	int Age;			//å¹´é¾„
+	char Hometown[15];  //è®°å½•å®¶å»·åœ°å€
+	int Score[6];       //è®°å½•æˆç»©,è¯­æ•°è‹±ç‰©åŒ–ç”Ÿ
 } info[Maxnum];
 
-int count; //È«¾Ö±äÁ¿£¬¼ÇÂ¼ÁËÒ»¹²ÓĞ¶àÉÙ¸öĞÅÏ¢ÊıÄ¿  Êµ¼ÊÉÏÓĞcount+1¸öÊı¾İ
+int count; //å…¨å±€å˜é‡ï¼Œè®°å½•äº†ä¸€å…±æœ‰å¤šå°‘ä¸ªä¿¡æ¯æ•°ç›®  å®é™…ä¸Šæœ‰count+1ä¸ªæ•°æ®
 
-//º¯ÊıÉùÃ÷
+//å‡½æ•°å£°æ˜
 void InputChoice();
 void AddInfo();
 void DeleteInfo();
@@ -27,54 +27,56 @@ void ShowAllInfo();
 void Greeting(int);
 void Save();
 
-//Ö÷º¯Êı
+//ä¸»å‡½æ•°
 int	main() {
 	FILE* fp1;
 	FILE* fp2;
-	//½«ÎÄ¼şÀïµÄĞÅÏ¢ÄÚÈİ¶ÁÈ¡µ½½á¹¹Êı×éÖĞ
-	//ÏÈ¶ÁÈ¡Ñ§Éú»ù±¾ĞÅÏ¢
-	if ((fp2 = fopen("StudentInfo.txt", "r")) == NULL) {
-		printf("\t\t\t		ÎŞ·¨´ò¿ªÎÄ¼ş£¡\n");
+	//å°†æ–‡ä»¶é‡Œçš„ä¿¡æ¯å†…å®¹è¯»å–åˆ°ç»“æ„æ•°ç»„ä¸­
+	//å…ˆè¯»å–å­¦ç”ŸåŸºæœ¬ä¿¡æ¯
+	if ((fp2 = fopen("StudentInfo.txt", "w+")) == NULL) {
+		printf("\t\t\t		æ— æ³•æ‰“å¼€æ–‡ä»¶ï¼\n");
 		exit(0);
 	}
 	while (fscanf(fp2, "%d\t%s\t%s\t%s\t%d", &info[count].Idnumber, info[count].Name, info[count].Sex, info[count].Hometown, &info[count].Age) != EOF) {
 		count++;
 	}
 	if (fclose(fp2)) {
-		printf("\t\t\t		ÎŞ·¨¹Ø±ÕÎÄ¼ş£¡\n");
+		printf("\t\t\t		æ— æ³•å…³é—­æ–‡ä»¶ï¼\n");
 		exit(0);
 	}
-	//ÔÙ¶ÁÈ¡Ñ§Éú³É¼¨ĞÅÏ¢
-	int t;	//ÔÚ¶ÁÈ¡ÖĞĞèÒªÂÔ¹ıÄ³Ğ©Êı¾İ
+	//å†è¯»å–å­¦ç”Ÿæˆç»©ä¿¡æ¯
+	int t;	//åœ¨è¯»å–ä¸­éœ€è¦ç•¥è¿‡æŸäº›æ•°æ®
 	count = 0;
-	if ((fp1 = fopen("StudentScore.txt", "r")) == NULL) {
-		printf("\t\t\t		ÎŞ·¨´ò¿ªÎÄ¼ş£¡\n");
+	if ((fp1 = fopen("StudentScore.txt", "w+")) == NULL) {
+		printf("\t\t\t		æ— æ³•æ‰“å¼€æ–‡ä»¶ï¼\n");
+		system("pause");
 		exit(0);
 	}
 	while (fscanf(fp1, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d", &info[count].Num, &t, &info[count].Score[0], &info[count].Score[1], &info[count].Score[2], &info[count].Score[3], &info[count].Score[4], &info[count].Score[5]) != EOF) {
-		count++;	//»ñÈ¡ÁËĞÅÏ¢ÊıÄ¿
+		count++;	//è·å–äº†ä¿¡æ¯æ•°ç›®
 	}
 	if (fclose(fp1)) {
-		printf("\t\t\t		ÎŞ·¨¹Ø±ÕÎÄ¼ş£¡\n");
+		printf("\t\t\t		æ— æ³•å…³é—­æ–‡ä»¶ï¼\n");
+		system("pause");
 		exit(0);
 	}
 	Greeting(1);
-	InputChoice();  //´Ëµ÷ÓÃ²»»á·µ»ØÀ´
+	InputChoice();  //æ­¤è°ƒç”¨ä¸ä¼šè¿”å›æ¥
 }
-//Ö÷²Ëµ¥
+//ä¸»èœå•
 void InputChoice() {
 	int choice;
 _A:
 	system("cls");
 	printf("\n\n");
-	printf("\t\t\t		Ö÷²Ëµ¥\n\n");
-	printf("\t\t\t		ÇëÑ¡ÔñÄãµÄ²Ù×÷:\n\n");
-	printf("\t\t\t		1-Ìí¼ÓÒ»¸öÑ§ÉúĞÅÏ¢\n");
-	printf("\t\t\t		2-É¾³ıÒ»¸öÑ§ÉúĞÅÏ¢\n");
-	printf("\t\t\t		3-ĞŞ¸ÄÒ»¸öÑ§ÉúĞÅÏ¢\n");
-	printf("\t\t\t		4-²éÕÒÒ»¸öÑ§ÉúĞÅÏ¢\n");
-	printf("\t\t\t		5-ÏÔÊ¾È«²¿Ñ§ÉúĞÅÏ¢\n");
-	printf("\t\t\t		0-ÍË³ö³ÌĞò\n");
+	printf("\t\t\t		ä¸»èœå•\n\n");
+	printf("\t\t\t		è¯·é€‰æ‹©ä½ çš„æ“ä½œ:\n\n");
+	printf("\t\t\t		1-æ·»åŠ ä¸€ä¸ªå­¦ç”Ÿä¿¡æ¯\n");
+	printf("\t\t\t		2-åˆ é™¤ä¸€ä¸ªå­¦ç”Ÿä¿¡æ¯\n");
+	printf("\t\t\t		3-ä¿®æ”¹ä¸€ä¸ªå­¦ç”Ÿä¿¡æ¯\n");
+	printf("\t\t\t		4-æŸ¥æ‰¾ä¸€ä¸ªå­¦ç”Ÿä¿¡æ¯\n");
+	printf("\t\t\t		5-æ˜¾ç¤ºå…¨éƒ¨å­¦ç”Ÿä¿¡æ¯\n");
+	printf("\t\t\t		0-é€€å‡ºç¨‹åº\n");
 	scanf("%d", &choice);
 	switch (choice) {
 	case 1:
@@ -92,119 +94,119 @@ _A:
 	case 5:
 		ShowAllInfo();
 		break;
-	case 0:Greeting(0);  //´Ëº¯Êıµ÷ÓÃÎª³ÌĞòÎ¨Ò»³ö¿Ú
+	case 0:Greeting(0);  //æ­¤å‡½æ•°è°ƒç”¨ä¸ºç¨‹åºå”¯ä¸€å‡ºå£
 		break;
 	}
 	if (choice > 5) {
-		printf("\t\t\t		ÇëÊäÈëÕıÈ·µÄÊı×Ö£¡\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ­£ç¡®çš„æ•°å­—ï¼\n");
 		system("pause");
 		goto _A;
 	}
 }
-//Ìí¼ÓÑ§ÉúĞÅÏ¢
+//æ·»åŠ å­¦ç”Ÿä¿¡æ¯
 void AddInfo() {
 	int choice, N;
 	system("cls");
-	printf("\n\n\t\t\t		ÕıÔÚÖ´ĞĞÌí¼Ó²Ù×÷£¬ÇëÄú°´ÒªÇóÊäÈë\n\n");
+	printf("\n\n\t\t\t		æ­£åœ¨æ‰§è¡Œæ·»åŠ æ“ä½œï¼Œè¯·æ‚¨æŒ‰è¦æ±‚è¾“å…¥\n\n");
 	while (1) {
-		printf("\t\t\t		ÇëÊäÈëÌí¼ÓµÄÑ§ÉúĞÅÏ¢µÄ¸öÊı\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ·»åŠ çš„å­¦ç”Ÿä¿¡æ¯çš„ä¸ªæ•°\n");
 		scanf("%d", &N);
 		if (N > 0) {
 			break;
 		}
 		else {
-			printf("\t\t\t		ÇëÊäÈëÕıÊı£¡\n");
+			printf("\t\t\t		è¯·è¾“å…¥æ­£æ•°ï¼\n");
 			system("pause");
 		}
 	}
 	for (int k = 0;k < N;k++) {
 	_Again:
-		printf("\t\t\t		ÒÑÊäÈë%d¸öÑ§ÉúµÄĞÅÏ¢\n", k);
-		printf("\t\t\t		ÇëÊäÈëÑ§ÉúµÄÑ§ºÅ¡¢ĞÕÃû¡¢ĞÔ±ğ¡¢ÄêÁä¡¢¼ÒÍ¥×¡Ö·\n");
+		printf("\t\t\t		å·²è¾“å…¥%dä¸ªå­¦ç”Ÿçš„ä¿¡æ¯\n", k);
+		printf("\t\t\t		è¯·è¾“å…¥å­¦ç”Ÿçš„å­¦å·ã€å§“åã€æ€§åˆ«ã€å¹´é¾„ã€å®¶åº­ä½å€\n");
 		scanf("%d %s %s %d %s", &info[count].Idnumber, info[count].Name, info[count].Sex, &info[count].Age, info[count].Hometown);
 		fflush(stdin);
-		for (int i = 0;i < count;i++) {		//ÓÃÓÚ¼ì²âÊÇ·ñÒÑ¾­´æÔÚ
+		for (int i = 0;i < count;i++) {		//ç”¨äºæ£€æµ‹æ˜¯å¦å·²ç»å­˜åœ¨
 			if (info[i].Idnumber == info[count].Idnumber) {
-				printf("\t\t\t		ÒÑ´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+				printf("\t\t\t		å·²å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 				while (1) {
-					printf("\t\t\t		ÇëÎÊÊÇ·ñÖØĞÂÌí¼Ó£¿\n");
-					printf("\t\t\t		1-ÊÇ 2-·ñ£¬·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		è¯·é—®æ˜¯å¦é‡æ–°æ·»åŠ ï¼Ÿ\n");
+					printf("\t\t\t		1-æ˜¯ 2-å¦ï¼Œè¿”å›ä¸»èœå•\n");
 					scanf("%d", &choice);
 					if (choice == 1) {
 						goto _Again;
 					}
 					else if (choice == 2) {
-						printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+						printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 						system("pause");
 						InputChoice();
 					}
 					else {
-						printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+						printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 						system("pause");
 					}
 				}
 			}
 		}
 		fflush(stdin);
-		printf("\n\t\t\t		ÇëÊäÈë¸ÃÑ§ÉúµÄ¸÷¿Æ³É¼¨£¬Çë°´ÓïÊıÓ¢Îï»¯ÉúµÄË³ĞòÊäÈë\n");
+		printf("\n\t\t\t		è¯·è¾“å…¥è¯¥å­¦ç”Ÿçš„å„ç§‘æˆç»©ï¼Œè¯·æŒ‰è¯­æ•°è‹±ç‰©åŒ–ç”Ÿçš„é¡ºåºè¾“å…¥\n");
 		scanf("%d %d %d %d %d %d", &info[count].Score[0], &info[count].Score[1], &info[count].Score[2], &info[count].Score[3], &info[count].Score[4], &info[count].Score[5]);
 		info[count].Num = info[count - 1].Num + 1;
-		count++;  //Ëù±£´æµÄĞÅÏ¢ÊıÄ¿¼ÓÒ»
+		count++;  //æ‰€ä¿å­˜çš„ä¿¡æ¯æ•°ç›®åŠ ä¸€
 	}
-	Save();			//½«ĞÂÌí¼ÓµÄĞÅÏ¢±£´æµ½ÎÄ¼şÖĞ
-	printf("\t\t\t		Ìí¼Ó³É¹¦£¡\n");
+	Save();			//å°†æ–°æ·»åŠ çš„ä¿¡æ¯ä¿å­˜åˆ°æ–‡ä»¶ä¸­
+	printf("\t\t\t		æ·»åŠ æˆåŠŸï¼\n");
 	system("pause");
-	printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥£¡\n");
+	printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•ï¼\n");
 	system("pause");
 	InputChoice();
 }
-//É¾³ıÄ³¸öÑ§ÉúµÄĞÅÏ¢
+//åˆ é™¤æŸä¸ªå­¦ç”Ÿçš„ä¿¡æ¯
 void DeleteInfo() {
 	char NAME[15];
-	int way, ID, choice, Check = 0, Mark;  //CheckÓÃÓÚÅĞ¶ÏÊÇ·ñ´æÔÚ´ËÈËµÄĞÅÏ¢£¬0±íÊ¾²»´æÔÚ;MarkÓÃÓÚ±ê¼ÇËùÉ¾³ıµÄĞÅÏ¢µÄÏÂ±ê
+	int way, ID, choice, Check = 0, Mark;  //Checkç”¨äºåˆ¤æ–­æ˜¯å¦å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼Œ0è¡¨ç¤ºä¸å­˜åœ¨;Markç”¨äºæ ‡è®°æ‰€åˆ é™¤çš„ä¿¡æ¯çš„ä¸‹æ ‡
 	system("cls");
-	printf("\n\n\t\t\t		ÕıÔÚÖ´ĞĞÉ¾³ı²Ù×÷£¬ÇëÄú°´ÒªÇóÊäÈë\n\n");
+	printf("\n\n\t\t\t		æ­£åœ¨æ‰§è¡Œåˆ é™¤æ“ä½œï¼Œè¯·æ‚¨æŒ‰è¦æ±‚è¾“å…¥\n\n");
 _A:
-	printf("\t\t\t		ÇëÊ¹ÓÃ£º\n");
-	printf("\t\t\t		1-Ñ§ºÅ»ò2-ĞÕÃû Ñ¡Ôñ¶ÔÏó\n");
-	printf("\t\t\t		3-»Øµ½Ö÷²Ëµ¥\n");
+	printf("\t\t\t		è¯·ä½¿ç”¨ï¼š\n");
+	printf("\t\t\t		1-å­¦å·æˆ–2-å§“å é€‰æ‹©å¯¹è±¡\n");
+	printf("\t\t\t		3-å›åˆ°ä¸»èœå•\n");
 	scanf("%d", &way);
 	if (way == 1) {
-		printf("\t\t\t		ÇëÊäÈë²Ù×÷¶ÔÏóµÄÑ§ºÅ:\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ“ä½œå¯¹è±¡çš„å­¦å·:\n");
 		scanf("%d", &ID);
 		for (int i = 0;i < count;i++) {
 			if (info[i].Idnumber == ID) {
-				Check = 1;  //±íÊ¾´æÔÚ´ËÈËµÄĞÅÏ¢
+				Check = 1;  //è¡¨ç¤ºå­˜åœ¨æ­¤äººçš„ä¿¡æ¯
 				Mark = i;
 			}
 		}
 		if (Check == 0) {
-			printf("\t\t\t		²»´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+			printf("\t\t\t		ä¸å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 			system("pause");
 			while (1) {
-				printf("\t\t\t		ÊÇ·ñÖØĞÂÊäÈë 1-ÖØĞÂÊäÈë 2-·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ˜¯å¦é‡æ–°è¾“å…¥ 1-é‡æ–°è¾“å…¥ 2-è¿”å›ä¸»èœå•\n");
 				scanf("%d", &choice);
 				if (choice == 1) {
 					goto _A;
 				}
 				else if (choice == 2) {
-					printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 					system("pause");
 					InputChoice();
 				}
 				else {
-					printf("\t\t\t		ÖØĞÂÊäÈëÇëÊäÈë1»ò2£¡\n");
+					printf("\t\t\t		é‡æ–°è¾“å…¥è¯·è¾“å…¥1æˆ–2ï¼\n");
 					system("pause");
 				}
 			}
 		}
 		else if (Check == 1) {
-			while (1) {		//Ñ¯ÎÊÊÇ·ñÈ·¶¨É¾³ı
-				printf("\t\t\t		ÊÇ·ñÈ·¶¨É¾³ıÑ§ºÅÎª%dµÄÑ§ÉúµÄĞÅÏ¢£¿\n", ID);
-				printf("\t\t\t		1-ÊÇ 2-·ñ£¬·µ»ØÖØĞÂÊäÈë 3-·ñ£¬·µ»ØÖ÷²Ëµ¥\n");
+			while (1) {		//è¯¢é—®æ˜¯å¦ç¡®å®šåˆ é™¤
+				printf("\t\t\t		æ˜¯å¦ç¡®å®šåˆ é™¤å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„ä¿¡æ¯ï¼Ÿ\n", ID);
+				printf("\t\t\t		1-æ˜¯ 2-å¦ï¼Œè¿”å›é‡æ–°è¾“å…¥ 3-å¦ï¼Œè¿”å›ä¸»èœå•\n");
 				scanf("%d", &choice);
 				if (choice == 1) {
-					for (int i = Mark;i < count - Mark - 1;i++) {	//½«ËùÓĞµÄĞÅÏ¢¶¼ÍùÇ°ÒÆ¶¯Ò»Î»£¬³ıÁËĞòºÅ
+					for (int i = Mark;i < count - Mark - 1;i++) {	//å°†æ‰€æœ‰çš„ä¿¡æ¯éƒ½å¾€å‰ç§»åŠ¨ä¸€ä½ï¼Œé™¤äº†åºå·
 						info[i].Idnumber = info[i + 1].Idnumber;
 						strcpy(info[i].Name, info[i + 1].Name);
 						strcpy(info[i].Sex, info[i + 1].Sex);
@@ -217,11 +219,11 @@ _A:
 						info[i].Score[4] = info[i + 1].Score[4];
 						info[i].Score[5] = info[i + 1].Score[5];
 					}
-					count--;		//½«ĞÅÏ¢ÊıÄ¿¼õÒ»
+					count--;		//å°†ä¿¡æ¯æ•°ç›®å‡ä¸€
 					Save();
-					printf("\t\t\t		ÒÑ³É¹¦É¾³ıÑ§ºÅÎª%dµÄÑ§ÉúµÄĞÅÏ¢£¡\n", ID);
+					printf("\t\t\t		å·²æˆåŠŸåˆ é™¤å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„ä¿¡æ¯ï¼\n", ID);
 					system("pause");
-					printf("\t\t\t		¼´½«·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		å³å°†è¿”å›ä¸»èœå•\n");
 					system("pause");
 					InputChoice();
 				}
@@ -229,50 +231,50 @@ _A:
 					goto _A;
 				}
 				else if (choice == 3) {
-					printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 					system("pause");
 					InputChoice();
 				}
 				else {
-					printf("\t\t\t		ÇëÊäÈë1¡¢2»ò3£¡\n");
+					printf("\t\t\t		è¯·è¾“å…¥1ã€2æˆ–3ï¼\n");
 					system("pause");
 				}
 			}
 		}
 	}
 	else if (way == 2) {
-		printf("\t\t\t		ÇëÊäÈë²Ù×÷¶ÔÏóµÄĞÕÃû:\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ“ä½œå¯¹è±¡çš„å§“å:\n");
 		scanf("%s", NAME);
 		for (int i = 0;i <= count;i++) {
 			if (strcmp(NAME, info[i].Name) == 0) {
-				Check = 1;  //±íÊ¾´æÔÚ´ËÈËµÄĞÅÏ¢
+				Check = 1;  //è¡¨ç¤ºå­˜åœ¨æ­¤äººçš„ä¿¡æ¯
 				Mark = i;
 			}
 		}
 		if (Check == 0) {
-			printf("\t\t\t		²»´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+			printf("\t\t\t		ä¸å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 			system("pause");
 			while (1) {
-				printf("\t\t\t		ÊÇ·ñÖØĞÂÊäÈë 1-ÖØĞÂÊäÈë 2-·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ˜¯å¦é‡æ–°è¾“å…¥ 1-é‡æ–°è¾“å…¥ 2-è¿”å›ä¸»èœå•\n");
 				scanf("%d", &choice);
 				if (choice == 1) {
 					goto _A;
 				}
 				else if (choice == 2) {
-					printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 					system("pause");
 					InputChoice();
 				}
 				else {
-					printf("\t\t\t		ÖØĞÂÊäÈëÇëÊäÈë1»ò2£¡\n");
+					printf("\t\t\t		é‡æ–°è¾“å…¥è¯·è¾“å…¥1æˆ–2ï¼\n");
 					system("pause");
 				}
 			}
 		}
 		else {
 			while (1) {
-				printf("\t\t\t		ÊÇ·ñÈ·¶¨É¾³ıĞÕÃûÎª%sµÄÑ§ÉúµÄĞÅÏ¢?\n", NAME);
-				printf("\t\t\t		1-ÊÇ 2-·ñ£¬·µ»ØÖØĞÂÊäÈë 3-·ñ£¬·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ˜¯å¦ç¡®å®šåˆ é™¤å§“åä¸º%sçš„å­¦ç”Ÿçš„ä¿¡æ¯?\n", NAME);
+				printf("\t\t\t		1-æ˜¯ 2-å¦ï¼Œè¿”å›é‡æ–°è¾“å…¥ 3-å¦ï¼Œè¿”å›ä¸»èœå•\n");
 				scanf("%d", &choice);
 				if (choice == 1) {
 					for (int i = Mark;i < count - Mark - 1;i++) {
@@ -290,9 +292,9 @@ _A:
 					}
 					count--;
 					Save();
-					printf("\t\t\t		ÒÑ³É¹¦É¾³ıĞÕÃûÎª%sµÄÑ§ÉúµÄĞÅÏ¢£¡\n", NAME);
+					printf("\t\t\t		å·²æˆåŠŸåˆ é™¤å§“åä¸º%sçš„å­¦ç”Ÿçš„ä¿¡æ¯ï¼\n", NAME);
 					system("pause");
-					printf("\t\t\t		¼´½«·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		å³å°†è¿”å›ä¸»èœå•\n");
 					system("pause");
 					InputChoice();
 				}
@@ -300,81 +302,81 @@ _A:
 					goto _A;
 				}
 				else if (choice == 3) {
-					printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+					printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 					system("pause");
 					InputChoice();
 				}
 				else {
-					printf("\t\t\t		ÇëÊäÈë1¡¢2»ò3£¡\n");
+					printf("\t\t\t		è¯·è¾“å…¥1ã€2æˆ–3ï¼\n");
 					system("pause");
 				}
 			}
 		}
 	}
 	else if (way == 3) {
-		printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+		printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 		system("pause");
 		InputChoice();
 	}
 	else {
-		printf("\t\t\t		ÇëÊäÈë1¡¢2»ò3£¡\n");
+		printf("\t\t\t		è¯·è¾“å…¥1ã€2æˆ–3ï¼\n");
 		system("pause");
 		goto _A;
 	}
 }
-//ĞŞ¸ÄÄ³¸öÑ§ÉúµÄĞÅÏ¢
+//ä¿®æ”¹æŸä¸ªå­¦ç”Ÿçš„ä¿¡æ¯
 void ModifyInfo() {
 	int choice, ID, way, choice1;
 	char NAME[15];
 	system("cls");
-	printf("\n\n\t\t\t		ÕıÔÚÖ´ĞĞĞŞ¸Ä²Ù×÷£¬ÇëÄú°´ÒªÇóÊäÈë\n\n");
+	printf("\n\n\t\t\t		æ­£åœ¨æ‰§è¡Œä¿®æ”¹æ“ä½œï¼Œè¯·æ‚¨æŒ‰è¦æ±‚è¾“å…¥\n\n");
 _A:
-	printf("\t\t\t		ÇëÊ¹ÓÃ£º\n");
-	printf("\t\t\t		1-Ñ§ºÅ»ò2-ĞÕÃû Ñ¡Ôñ¶ÔÏó\n");
-	printf("\t\t\t		3-»Øµ½Ö÷²Ëµ¥\n");
+	printf("\t\t\t		è¯·ä½¿ç”¨ï¼š\n");
+	printf("\t\t\t		1-å­¦å·æˆ–2-å§“å é€‰æ‹©å¯¹è±¡\n");
+	printf("\t\t\t		3-å›åˆ°ä¸»èœå•\n");
 	scanf("%d", &way);
 	if (way == 1) {
-		printf("\t\t\t		ÇëÊäÈë²Ù×÷¶ÔÏóµÄÑ§ºÅ:\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ“ä½œå¯¹è±¡çš„å­¦å·:\n");
 		scanf("%d", &ID);
 		for (int i = 0;i < count;i++) {
 			if (ID == info[i].Idnumber) {
-				printf("\t\t\t		ÇëÊäÈëĞèÒªĞŞ¸ÄµÄĞÅÏ¢\n");
-				printf("\t\t\t		1-Ñ§ºÅ 2-ĞÕÃû 3-ĞÔ±ğ 4-ÄêÁä 5-¼ÒÍ¥×¡Ö· 6-¸÷¿Æ³É¼¨\n");  //Ñ§ºÅ²»ÄÜ¹»ÖØ¸´
+				printf("\t\t\t		è¯·è¾“å…¥éœ€è¦ä¿®æ”¹çš„ä¿¡æ¯\n");
+				printf("\t\t\t		1-å­¦å· 2-å§“å 3-æ€§åˆ« 4-å¹´é¾„ 5-å®¶åº­ä½å€ 6-å„ç§‘æˆç»©\n");  //å­¦å·ä¸èƒ½å¤Ÿé‡å¤
 			_B:
 				scanf("%d", &choice);
-				switch (choice) {		//ÓÃÓÚ·Ö±ğĞŞ¸Ä¸÷¸öĞÅÏ¢
+				switch (choice) {		//ç”¨äºåˆ†åˆ«ä¿®æ”¹å„ä¸ªä¿¡æ¯
 				case 1:
 					while (1) {
 						int tempID;
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄÑ§ºÅ\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å­¦å·\n");
 						scanf("%d", &tempID);
-						for (int j = 0;j < count;j++) {  //ÓÃÓÚ¼ì²âÑ§ºÅÊÇ·ñÖØ¸´
+						for (int j = 0;j < count;j++) {  //ç”¨äºæ£€æµ‹å­¦å·æ˜¯å¦é‡å¤
 							if (info[j].Idnumber == tempID) {
-								printf("\t\t\t		ÒÑ´æÔÚ´ËÑ§ºÅ£¡\n");
+								printf("\t\t\t		å·²å­˜åœ¨æ­¤å­¦å·ï¼\n");
 								while (1) {
-									printf("\t\t\t		ÇëÎÊÊÇ·ñÖØĞÂÌí¼Ó£¿\n");
-									printf("\t\t\t		1-ÊÇ 2-·ñ£¬·µ»ØÖ÷²Ëµ¥\n");
+									printf("\t\t\t		è¯·é—®æ˜¯å¦é‡æ–°æ·»åŠ ï¼Ÿ\n");
+									printf("\t\t\t		1-æ˜¯ 2-å¦ï¼Œè¿”å›ä¸»èœå•\n");
 									scanf("%d", &choice);
 									if (choice == 1) {
-										printf("\t\t\t		ÇëÔÙ´ÎÊäÈëÑ§ºÅ\n");
+										printf("\t\t\t		è¯·å†æ¬¡è¾“å…¥å­¦å·\n");
 										goto _B;
 									}
 									else if (choice == 2) {
-										printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+										printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 										system("pause");
 										InputChoice();
 									}
 									else {
-										printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+										printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 										system("pause");
 									}
 								}
 							}
 						}
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
-							printf("\t\t\t		ÒÑ½«Ñ§ºÅÎª%dµÄÑ§ÉúµÄÑ§ºÅ¸ü¸ÄÎª%d\n", info[i].Idnumber, tempID);
+							printf("\t\t\t		å·²å°†å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„å­¦å·æ›´æ”¹ä¸º%d\n", info[i].Idnumber, tempID);
 							info[i].Idnumber = tempID;
 							system("pause");
 							break;
@@ -383,20 +385,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 2:
 					while (1) {
 						char tempNAME[15];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄĞÕÃû\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å§“å\n");
 						scanf("%s", tempNAME);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							strcpy(info[i].Name, tempNAME);
-							printf("\t\t\t		ÒÑ½«Ñ§ºÅÎª%dµÄÑ§ÉúµÄĞÕÃû¸ü¸ÄÎª%s\n", info[i].Idnumber, info[i].Name);
+							printf("\t\t\t		å·²å°†å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„å§“åæ›´æ”¹ä¸º%s\n", info[i].Idnumber, info[i].Name);
 							system("pause");
 							break;
 						}
@@ -404,20 +406,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 3:
 					while (1) {
 						char tempSEX[10];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄĞÔ±ğ\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„æ€§åˆ«\n");
 						scanf("%s", tempSEX);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							strcpy(info[i].Sex, tempSEX);
-							printf("\t\t\t		ÒÑ½«Ñ§ºÅÎª%dµÄÑ§ÉúµÄĞÔ±ğ¸ü¸ÄÎª%s\n", info[i].Idnumber, info[i].Sex);
+							printf("\t\t\t		å·²å°†å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„æ€§åˆ«æ›´æ”¹ä¸º%s\n", info[i].Idnumber, info[i].Sex);
 							system("pause");
 							break;
 						}
@@ -425,20 +427,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 4:
 					while (1) {
 						int tempAGE;
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄÄêÁä\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å¹´é¾„\n");
 						scanf("%d", &tempAGE);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							info[i].Age = tempAGE;
-							printf("\t\t\t		ÒÑ½«Ñ§ºÅÎª%dµÄÑ§ÉúµÄÄêÁä¸ü¸ÄÎª%d\n", info[i].Idnumber, info[i].Age);
+							printf("\t\t\t		å·²å°†å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„å¹´é¾„æ›´æ”¹ä¸º%d\n", info[i].Idnumber, info[i].Age);
 							system("pause");
 							break;
 						}
@@ -446,20 +448,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 5:
 					while (1) {
 						char tempHOME[15];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄ¼ÒÍ¥×¡Ö·\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å®¶åº­ä½å€\n");
 						scanf("%s", tempHOME);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							strcpy(info[i].Hometown, tempHOME);
-							printf("\t\t\t		ÒÑ½«Ñ§ºÅÎª%dµÄÑ§ÉúµÄ¼ÒÍ¥×¡Ö·¸ü¸ÄÎª%s\n", info[i].Idnumber, info[i].Hometown);
+							printf("\t\t\t		å·²å°†å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„å®¶åº­ä½å€æ›´æ”¹ä¸º%s\n", info[i].Idnumber, info[i].Hometown);
 							system("pause");
 							break;
 						}
@@ -467,25 +469,25 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 6:
 					while (1) {
 						int SCORE[6];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄ¸÷¿Æ³É¼¨\n");
-						printf("\t\t\t		ÇëÒÔÓïÊıÓ¢Îï»¯ÉúµÄË³ĞòÊäÈë\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å„ç§‘æˆç»©\n");
+						printf("\t\t\t		è¯·ä»¥è¯­æ•°è‹±ç‰©åŒ–ç”Ÿçš„é¡ºåºè¾“å…¥\n");
 						for (int j = 0;j < 6;j++) {
 							scanf("%d", &SCORE[j]);
 						}
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							for (int j = 0;j < 6;j++) {
 								info[i].Score[j] = SCORE[j];
 							}
-							printf("\t\t\t		ÒÑ½«Ñ§ºÅÎª%dµÄÑ§ÉúµÄÓïÊıÓ¢Îï»¯Éú³É¼¨¸ü¸ÄÎª%d %d %d %d %d %d\n", info[i].Idnumber, info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
+							printf("\t\t\t		å·²å°†å­¦å·ä¸º%dçš„å­¦ç”Ÿçš„è¯­æ•°è‹±ç‰©åŒ–ç”Ÿæˆç»©æ›´æ”¹ä¸º%d %d %d %d %d %d\n", info[i].Idnumber, info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
 							system("pause");
 							break;
 						}
@@ -493,79 +495,79 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				}
 				Save();
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
-		}	//µ±ÅÜÍêÁËfor»¹ÊÇÃ»ÓĞÕÒµ½Ä¿±ê£¬²Å»áÖ´ĞĞÒÔÏÂ´úÂë
-		printf("\t\t\t		²»´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+		}	//å½“è·‘å®Œäº†forè¿˜æ˜¯æ²¡æœ‰æ‰¾åˆ°ç›®æ ‡ï¼Œæ‰ä¼šæ‰§è¡Œä»¥ä¸‹ä»£ç 
+		printf("\t\t\t		ä¸å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 		system("pause");
 		while (1) {
-			printf("\t\t\t		ÊÇ·ñÖØĞÂÊäÈë£¿1-ÖØĞÂÊäÈë 2-·µ»ØÖ÷²Ëµ¥\n");
+			printf("\t\t\t		æ˜¯å¦é‡æ–°è¾“å…¥ï¼Ÿ1-é‡æ–°è¾“å…¥ 2-è¿”å›ä¸»èœå•\n");
 			scanf("%d", &choice);
 			if (choice == 1) {
 				goto _A;
 			}
 			else if (choice == 2) {
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else {
-				printf("\t\t\t		ÖØĞÂÊäÈëÇëÊäÈë1»ò2£¡\n");
+				printf("\t\t\t		é‡æ–°è¾“å…¥è¯·è¾“å…¥1æˆ–2ï¼\n");
 				system("pause");
 			}
 		}
 	}
 	else if (way == 2) {
-		printf("\t\t\t		ÇëÊäÈë²Ù×÷¶ÔÏóµÄĞÕÃû:\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ“ä½œå¯¹è±¡çš„å§“å:\n");
 		scanf("%s", NAME);
 		for (int i = 0;i < count;i++) {
 			if ((strcmp(NAME, info[i].Name)) == 0) {
-				printf("\t\t\t		ÇëÊäÈëĞèÒªĞŞ¸ÄµÄĞÅÏ¢\n");
-				printf("\t\t\t		1-Ñ§ºÅ 2-ĞÕÃû 3-ĞÔ±ğ 4-ÄêÁä 5-¼ÒÍ¥×¡Ö· 6-¸÷¿Æ³É¼¨\n");
+				printf("\t\t\t		è¯·è¾“å…¥éœ€è¦ä¿®æ”¹çš„ä¿¡æ¯\n");
+				printf("\t\t\t		1-å­¦å· 2-å§“å 3-æ€§åˆ« 4-å¹´é¾„ 5-å®¶åº­ä½å€ 6-å„ç§‘æˆç»©\n");
 			_C:
 				scanf("%d", &choice);
-				switch (choice) {		//·Ö±ğĞŞ¸Ä
+				switch (choice) {		//åˆ†åˆ«ä¿®æ”¹
 				case 1:
 					while (1) {
 						int tempID;
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄÑ§ºÅ\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å­¦å·\n");
 						scanf("%d", &tempID);
-						for (int j = 0;j < count;j++) {  //ÓÃÓÚ¼ì²âÑ§ºÅÊÇ·ñÖØ¸´
+						for (int j = 0;j < count;j++) {  //ç”¨äºæ£€æµ‹å­¦å·æ˜¯å¦é‡å¤
 							if (info[j].Idnumber == tempID) {
-								printf("\t\t\t		ÒÑ´æÔÚ´ËÑ§ºÅ£¡\n");
+								printf("\t\t\t		å·²å­˜åœ¨æ­¤å­¦å·ï¼\n");
 								while (1) {
-									printf("\t\t\t		ÇëÎÊÊÇ·ñÖØĞÂÌí¼Ó£¿\n");
-									printf("\t\t\t		1-ÊÇ 2-·ñ£¬·µ»ØÖ÷²Ëµ¥\n");
+									printf("\t\t\t		è¯·é—®æ˜¯å¦é‡æ–°æ·»åŠ ï¼Ÿ\n");
+									printf("\t\t\t		1-æ˜¯ 2-å¦ï¼Œè¿”å›ä¸»èœå•\n");
 									scanf("%d", &choice);
 									if (choice == 1) {
-										printf("\t\t\t		ÇëÔÙ´ÎÊäÈëÑ§ºÅ\n");
+										printf("\t\t\t		è¯·å†æ¬¡è¾“å…¥å­¦å·\n");
 										goto _C;
 									}
 									else if (choice == 2) {
-										printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+										printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 										system("pause");
 										InputChoice();
 									}
 									else {
-										printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+										printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 										system("pause");
 									}
 								}
 							}
 						}
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							info[i].Idnumber = tempID;
-							printf("\t\t\t		ÒÑ½«ĞÕÃûÎª%sµÄÑ§ÉúµÄÑ§ºÅ¸ü¸ÄÎª%d\n", info[i].Name, info[i].Idnumber);
+							printf("\t\t\t		å·²å°†å§“åä¸º%sçš„å­¦ç”Ÿçš„å­¦å·æ›´æ”¹ä¸º%d\n", info[i].Name, info[i].Idnumber);
 							system("pause");
 							break;
 						}
@@ -573,19 +575,19 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 2:
 					while (1) {
 						char tempNAME[15];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄĞÕÃû\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å§“å\n");
 						scanf("%s", tempNAME);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
-							printf("\t\t\t		ÒÑ½«ĞÕÃûÎª%sµÄÑ§ÉúµÄĞÕÃû¸ü¸ÄÎª%s\n", info[i].Name, tempNAME);
+							printf("\t\t\t		å·²å°†å§“åä¸º%sçš„å­¦ç”Ÿçš„å§“åæ›´æ”¹ä¸º%s\n", info[i].Name, tempNAME);
 							strcpy(info[i].Name, tempNAME);
 							system("pause");
 							break;
@@ -594,20 +596,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 3:
 					while (1) {
 						char tempSEX[10];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄĞÔ±ğ\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„æ€§åˆ«\n");
 						scanf("%s", tempSEX);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							strcpy(info[i].Sex, tempSEX);
-							printf("\t\t\t		ÒÑ½«ĞÕÃûÎª%sµÄÑ§ÉúµÄĞÔ±ğ¸ü¸ÄÎª%s\n", info[i].Name, info[i].Sex);
+							printf("\t\t\t		å·²å°†å§“åä¸º%sçš„å­¦ç”Ÿçš„æ€§åˆ«æ›´æ”¹ä¸º%s\n", info[i].Name, info[i].Sex);
 							system("pause");
 							break;
 						}
@@ -615,20 +617,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 4:
 					while (1) {
 						int tempAGE;
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄÄêÁä\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å¹´é¾„\n");
 						scanf("%d", &tempAGE);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							info[i].Age = tempAGE;
-							printf("\t\t\t		ÒÑ½«ĞÕÃûÎª%sµÄÑ§ÉúµÄÄêÁä¸ü¸ÄÎª%d\n", info[i].Name, info[i].Age);
+							printf("\t\t\t		å·²å°†å§“åä¸º%sçš„å­¦ç”Ÿçš„å¹´é¾„æ›´æ”¹ä¸º%d\n", info[i].Name, info[i].Age);
 							system("pause");
 							break;
 						}
@@ -636,20 +638,20 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 5:
 					while (1) {
 						char tempHOME[15];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄ¼ÒÍ¥×¡Ö·\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å®¶åº­ä½å€\n");
 						scanf("%s", tempHOME);
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							strcpy(info[i].Hometown, tempHOME);
-							printf("\t\t\t		ÒÑ½«ĞÕÃûÎª%sµÄÑ§ÉúµÄ¼ÒÍ¥×¡Ö·¸ü¸ÄÎª%s\n", info[i].Name, info[i].Hometown);
+							printf("\t\t\t		å·²å°†å§“åä¸º%sçš„å­¦ç”Ÿçš„å®¶åº­ä½å€æ›´æ”¹ä¸º%s\n", info[i].Name, info[i].Hometown);
 							system("pause");
 							break;
 						}
@@ -657,25 +659,25 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				case 6:
 					while (1) {
 						int SCORE[6];
-						printf("\t\t\t		ÇëÊäÈëĞÂµÄ¸÷¿Æ³É¼¨\n");
-						printf("\t\t\t		ÇëÒÔÓïÊıÓ¢Îï»¯ÉúµÄË³ĞòÊäÈë\n");
+						printf("\t\t\t		è¯·è¾“å…¥æ–°çš„å„ç§‘æˆç»©\n");
+						printf("\t\t\t		è¯·ä»¥è¯­æ•°è‹±ç‰©åŒ–ç”Ÿçš„é¡ºåºè¾“å…¥\n");
 						for (int j = 0;j < 6;j++) {
 							scanf("%d", &SCORE[j]);
 						}
-						printf("\t\t\t		ÊÇ·ñÈ·¶¨¸ü¸Ä£¿1-ÊÇ 2-·ñ\n");
+						printf("\t\t\t		æ˜¯å¦ç¡®å®šæ›´æ”¹ï¼Ÿ1-æ˜¯ 2-å¦\n");
 						scanf("%d", &choice1);
 						if (choice1 == 1) {
 							for (int j = 0;j < 6;j++) {
 								info[i].Score[j] = SCORE[j];
 							}
-							printf("\t\t\t		ÒÑ½«ĞÕÃûÎª%sµÄÑ§ÉúµÄÓïÊıÓ¢Îï»¯Éú³É¼¨¸ü¸ÄÎª%d %d %d %d %d %d\n", info[i].Name, info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
+							printf("\t\t\t		å·²å°†å§“åä¸º%sçš„å­¦ç”Ÿçš„è¯­æ•°è‹±ç‰©åŒ–ç”Ÿæˆç»©æ›´æ”¹ä¸º%d %d %d %d %d %d\n", info[i].Name, info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
 							system("pause");
 							break;
 						}
@@ -683,163 +685,163 @@ _A:
 							goto _A;
 						}
 						else {
-							printf("\t\t\t		ÇëÊäÈë1»ò2£¡\n");
+							printf("\t\t\t		è¯·è¾“å…¥1æˆ–2ï¼\n");
 							system("pause");
 						}
 					}break;
 				}
 				Save();
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
-		}	//µ±Î´ÕÒµ½Ä¿±ê²Å»áÖ´ĞĞÒÔÏÂ´úÂë
-		printf("\t\t\t		²»´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+		}	//å½“æœªæ‰¾åˆ°ç›®æ ‡æ‰ä¼šæ‰§è¡Œä»¥ä¸‹ä»£ç 
+		printf("\t\t\t		ä¸å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 		system("pause");
 		while (1) {
-			printf("\t\t\t		ÊÇ·ñÖØĞÂÊäÈë£¿1-ÖØĞÂÊäÈë 2-·µ»ØÖ÷²Ëµ¥\n");
+			printf("\t\t\t		æ˜¯å¦é‡æ–°è¾“å…¥ï¼Ÿ1-é‡æ–°è¾“å…¥ 2-è¿”å›ä¸»èœå•\n");
 			scanf("%d", &choice);
 			if (choice == 1) {
 				goto _A;
 			}
 			else if (choice == 2) {
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else {
-				printf("\t\t\t		ÖØĞÂÊäÈëÇëÊäÈë1»ò2£¡\n");
+				printf("\t\t\t		é‡æ–°è¾“å…¥è¯·è¾“å…¥1æˆ–2ï¼\n");
 				system("pause");
 			}
 		}
 	}
 	else if (way == 3) {
-		printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+		printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 		system("pause");
 		InputChoice();
 	}
 	else {
-		printf("\t\t\t		ÇëÊäÈë1¡¢2»ò3£¡\n");
+		printf("\t\t\t		è¯·è¾“å…¥1ã€2æˆ–3ï¼\n");
 		system("pause");
 		goto _A;
 	}
 }
-//²éÕÒÄ³¸öÑ§ÉúµÄĞÅÏ¢
+//æŸ¥æ‰¾æŸä¸ªå­¦ç”Ÿçš„ä¿¡æ¯
 void SearchInfo() {
 	int way, ID, choice;
 	char NAME[15];
 	system("cls");
-	printf("\n\n\t\t\t		ÕıÔÚÖ´ĞĞ²éÕÒ²Ù×÷£¬ÇëÄú°´ÒªÇóÊäÈë\n\n");
+	printf("\n\n\t\t\t		æ­£åœ¨æ‰§è¡ŒæŸ¥æ‰¾æ“ä½œï¼Œè¯·æ‚¨æŒ‰è¦æ±‚è¾“å…¥\n\n");
 _A:
-	printf("\t\t\t		ÇëÊ¹ÓÃ£º\n");
-	printf("\t\t\t		1-Ñ§ºÅ»ò2-ĞÕÃû Ñ¡Ôñ¶ÔÏó\n");
-	printf("\t\t\t		3-»Øµ½Ö÷²Ëµ¥\n");
+	printf("\t\t\t		è¯·ä½¿ç”¨ï¼š\n");
+	printf("\t\t\t		1-å­¦å·æˆ–2-å§“å é€‰æ‹©å¯¹è±¡\n");
+	printf("\t\t\t		3-å›åˆ°ä¸»èœå•\n");
 	scanf("%d", &way);
 	if (way == 1) {
-		printf("\t\t\t		ÇëÊäÈë²Ù×÷¶ÔÏóµÄÑ§ºÅ:\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ“ä½œå¯¹è±¡çš„å­¦å·:\n");
 		scanf("%d", &ID);
 		for (int i = 0;i < count;i++) {
 			if (ID == info[i].Idnumber) {
-				printf("\t\t\t		Ñ§ºÅ%d¸ÃÑ§ÉúµÄĞÅÏ¢Îª£º\n", info[i].Idnumber);
-				printf("\t\t\t		ĞÕÃû\tĞÔ±ğ\tÄêÁä\t×¡Ö·\n");
+				printf("\t\t\t		å­¦å·%dè¯¥å­¦ç”Ÿçš„ä¿¡æ¯ä¸ºï¼š\n", info[i].Idnumber);
+				printf("\t\t\t		å§“å\tæ€§åˆ«\tå¹´é¾„\tä½å€\n");
 				printf("\t\t\t		%s\t%s\t%d\t%s\n", info[i].Name, info[i].Sex, info[i].Age, info[i].Hometown);
-				printf("\n\t\t\t		Ñ§ºÅ%dµÄÑ§ÉúµÄ³É¼¨Îª£º\n", info[i].Idnumber);
-				printf("\t\t\t		ÓïÎÄ\tÊıÑ§\tÓ¢Óï\tÎïÀí\t»¯Ñ§\tÉúÎï\n");
+				printf("\n\t\t\t		å­¦å·%dçš„å­¦ç”Ÿçš„æˆç»©ä¸ºï¼š\n", info[i].Idnumber);
+				printf("\t\t\t		è¯­æ–‡\tæ•°å­¦\tè‹±è¯­\tç‰©ç†\tåŒ–å­¦\tç”Ÿç‰©\n");
 				printf("\t\t\t		%d\t%d\t%d\t%d\t%d\t%d\n", info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
 				system("pause");
-				printf("\t\t\t		¼´½«·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		å³å°†è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
-		}	//Î´ÕÒµ½Ä¿±ê²Å»áÖ´ĞĞÒÔÏÂ´úÂë
-		printf("\t\t\t		²»´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+		}	//æœªæ‰¾åˆ°ç›®æ ‡æ‰ä¼šæ‰§è¡Œä»¥ä¸‹ä»£ç 
+		printf("\t\t\t		ä¸å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 		system("pause");
 		while (1) {
-			printf("\t\t\t		ÊÇ·ñÖØĞÂÊäÈë£¿1-ÖØĞÂÊäÈë 2-·µ»ØÖ÷²Ëµ¥\n");
+			printf("\t\t\t		æ˜¯å¦é‡æ–°è¾“å…¥ï¼Ÿ1-é‡æ–°è¾“å…¥ 2-è¿”å›ä¸»èœå•\n");
 			scanf("%d", &choice);
 			if (choice == 1) {
 				goto _A;
 			}
 			else if (choice == 2) {
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else {
-				printf("\t\t\t		ÖØĞÂÊäÈëÇëÊäÈë1»ò2£¡\n");
+				printf("\t\t\t		é‡æ–°è¾“å…¥è¯·è¾“å…¥1æˆ–2ï¼\n");
 				system("pause");
 			}
 		}
 	}
 	else if (way == 2) {
-		printf("\t\t\t		ÇëÊäÈë²Ù×÷¶ÔÏóµÄĞÕÃû:\n");
+		printf("\t\t\t		è¯·è¾“å…¥æ“ä½œå¯¹è±¡çš„å§“å:\n");
 		scanf("%s", NAME);
 		for (int i = 0;i < count;i++) {
 			if ((strcmp(NAME, info[i].Name)) == 0) {
-				printf("\t\t\t		ĞÕÃûÎª%s¸ÃÑ§ÉúµÄĞÅÏ¢Îª£º\n", info[i].Name);
-				printf("\t\t\t		Ñ§ºÅ\tĞÔ±ğ\tÄêÁä\t×¡Ö·\n");
+				printf("\t\t\t		å§“åä¸º%sè¯¥å­¦ç”Ÿçš„ä¿¡æ¯ä¸ºï¼š\n", info[i].Name);
+				printf("\t\t\t		å­¦å·\tæ€§åˆ«\tå¹´é¾„\tä½å€\n");
 				printf("\t\t\t		%d\t%s\t%d\t%s\n", info[i].Idnumber, info[i].Sex, info[i].Age, info[i].Hometown);
-				printf("\n\t\t\t		ĞÕÃûÎª%sµÄÑ§ÉúµÄ³É¼¨Îª£º\n", info[i].Name);
-				printf("\t\t\t		ÓïÎÄ\tÊıÑ§\tÓ¢Óï\tÎïÀí\t»¯Ñ§\tÉúÎï\n");
+				printf("\n\t\t\t		å§“åä¸º%sçš„å­¦ç”Ÿçš„æˆç»©ä¸ºï¼š\n", info[i].Name);
+				printf("\t\t\t		è¯­æ–‡\tæ•°å­¦\tè‹±è¯­\tç‰©ç†\tåŒ–å­¦\tç”Ÿç‰©\n");
 				printf("\t\t\t		%d\t%d\t%d\t%d\t%d\t%d\n", info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
 				system("pause");
-				printf("\t\t\t		¼´½«·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		å³å°†è¿”å›ä¸»èœå•\n");
 				system("pause");
 			}
 		}InputChoice();
-		//Î´ÕÒµ½Ä¿±ê²Å»áÖ´ĞĞÒÔÏÂ´úÂë
-		printf("\t\t\t		²»´æÔÚ´ËÈËµÄĞÅÏ¢£¡\n");
+		//æœªæ‰¾åˆ°ç›®æ ‡æ‰ä¼šæ‰§è¡Œä»¥ä¸‹ä»£ç 
+		printf("\t\t\t		ä¸å­˜åœ¨æ­¤äººçš„ä¿¡æ¯ï¼\n");
 		system("pause");
 		while (1) {
-			printf("\t\t\t		ÊÇ·ñÖØĞÂÊäÈë£¿1-ÖØĞÂÊäÈë 2-·µ»ØÖ÷²Ëµ¥\n");
+			printf("\t\t\t		æ˜¯å¦é‡æ–°è¾“å…¥ï¼Ÿ1-é‡æ–°è¾“å…¥ 2-è¿”å›ä¸»èœå•\n");
 			scanf("%d", &choice);
 			if (choice == 1) {
 				goto _A;
 			}
 			else if (choice == 2) {
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else {
-				printf("\t\t\t		ÖØĞÂÊäÈëÇëÊäÈë1»ò2£¡\n");
+				printf("\t\t\t		é‡æ–°è¾“å…¥è¯·è¾“å…¥1æˆ–2ï¼\n");
 				system("pause");
 			}
 		}
 	}
 	else if (way == 3) {
-		printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+		printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 		system("pause");
 		InputChoice();
 	}
 	else {
-		printf("\t\t\t		ÇëÊäÈë1¡¢2»ò3£¡\n");
+		printf("\t\t\t		è¯·è¾“å…¥1ã€2æˆ–3ï¼\n");
 		system("pause");
 		goto _A;
 	}
 }
-//½«ËùÓĞµÄĞÅÏ¢ÏÔÊ¾
+//å°†æ‰€æœ‰çš„ä¿¡æ¯æ˜¾ç¤º
 void ShowAllInfo() {
 	int choice;
-	int Sum[Maxnum];  //¼ÇÂ¼×Ü·Ö
-	int B[Maxnum];    //¸¨ÖúÅÅĞòÑ§ºÅ
+	int Sum[Maxnum];  //è®°å½•æ€»åˆ†
+	int B[Maxnum];    //è¾…åŠ©æ’åºå­¦å·
 	system("cls");
-	if (count > 0) {		//ĞÅÏ¢ÊıÄ¿´óÓÚ0£¬ËµÃ÷´æÔÚĞÅÏ¢
-		printf("\n\n\t\t\t		ÕâÊÇÈ«²¿µÄÑ§ÉúĞÅÏ¢,Ò»¹²%dÎ»\n\n", count);
-		printf("ĞòºÅ\tÑ§ºÅ\tĞÕÃû\tĞÔ±ğ\tÄêÁä\t¼ÒÍ¥×¡Ö·\tÓïÎÄ\tÊıÑ§\tÓ¢Óï\tÎïÀí\t»¯Ñ§\tÉúÎï\t×Ü·Ö\n");
-		for (int i = 0;i < count;i++) {		//½«ĞòºÅ£¬ºÍĞÅÏ¢È«²¿ÏÔÊ¾
+	if (count > 0) {		//ä¿¡æ¯æ•°ç›®å¤§äº0ï¼Œè¯´æ˜å­˜åœ¨ä¿¡æ¯
+		printf("\n\n\t\t\t		è¿™æ˜¯å…¨éƒ¨çš„å­¦ç”Ÿä¿¡æ¯,ä¸€å…±%dä½\n\n", count);
+		printf("åºå·\tå­¦å·\tå§“å\tæ€§åˆ«\tå¹´é¾„\tå®¶åº­ä½å€\tè¯­æ–‡\tæ•°å­¦\tè‹±è¯­\tç‰©ç†\tåŒ–å­¦\tç”Ÿç‰©\tæ€»åˆ†\n");
+		for (int i = 0;i < count;i++) {		//å°†åºå·ï¼Œå’Œä¿¡æ¯å…¨éƒ¨æ˜¾ç¤º
 			B[i] = info[i].Idnumber;
 			Sum[i] = info[i].Score[0] + info[i].Score[1] + info[i].Score[2] + info[i].Score[3] + info[i].Score[4] + info[i].Score[5];
 			printf("%d\t%d\t%s\t%s\t%d\t%-16s", info[i].Num, info[i].Idnumber, info[i].Name, info[i].Sex, info[i].Age, info[i].Hometown);
 			printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n", info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5], Sum[i]);
 		}
 		while (1) {
-			printf("\n\t\t\t		¿ÉÒÔÊäÈë\n");
-			printf("\t\t\t		1-°´×Ü·ÖÅÅĞò\n");
-			printf("\t\t\t		2-°´Ñ§ºÅÅÅĞòÀ´ÔÙ´ÎÏÔÊ¾\n");
-			printf("\t\t\t		3-Ö±½Ó·µ»ØÖ÷²Ëµ¥\n");
+			printf("\n\t\t\t		å¯ä»¥è¾“å…¥\n");
+			printf("\t\t\t		1-æŒ‰æ€»åˆ†æ’åº\n");
+			printf("\t\t\t		2-æŒ‰å­¦å·æ’åºæ¥å†æ¬¡æ˜¾ç¤º\n");
+			printf("\t\t\t		3-ç›´æ¥è¿”å›ä¸»èœå•\n");
 			scanf("%d", &choice);
-			if (choice == 1) {		//ÏÈ½«×Ü·Ö½øĞĞÅÅĞò£¬ÓÉ¸ßµ½µÍ
+			if (choice == 1) {		//å…ˆå°†æ€»åˆ†è¿›è¡Œæ’åºï¼Œç”±é«˜åˆ°ä½
 				for (int i = 0;i < count;i++) {
 					for (int j = 0;j < count - 1;j++) {
 						if (Sum[j] < Sum[j + 1]) {
@@ -850,24 +852,24 @@ void ShowAllInfo() {
 					}
 				}
 				system("cls");
-				printf("\n\n\t\t\t		ÕâÊÇÈ«²¿µÄÑ§ÉúĞÅÏ¢,°´ÕÕ×Ü·ÖÅÅĞò,Ò»¹²%dÎ»\n\n", count);
-				printf("ÅÅÃû\tÑ§ºÅ\tĞÕÃû\tĞÔ±ğ\tÄêÁä\t¼ÒÍ¥×¡Ö·\tÓïÎÄ\tÊıÑ§\tÓ¢Óï\tÎïÀí\t»¯Ñ§\tÉúÎï\t×Ü·Ö\n");
+				printf("\n\n\t\t\t		è¿™æ˜¯å…¨éƒ¨çš„å­¦ç”Ÿä¿¡æ¯,æŒ‰ç…§æ€»åˆ†æ’åº,ä¸€å…±%dä½\n\n", count);
+				printf("æ’å\tå­¦å·\tå§“å\tæ€§åˆ«\tå¹´é¾„\tå®¶åº­ä½å€\tè¯­æ–‡\tæ•°å­¦\tè‹±è¯­\tç‰©ç†\tåŒ–å­¦\tç”Ÿç‰©\tæ€»åˆ†\n");
 				for (int i = 0;i < count;i++) {
 					for (int j = 0;j < count;j++) {
 						int sum = info[j].Score[0] + info[j].Score[1] + info[j].Score[2] + info[j].Score[3] + info[j].Score[4] + info[j].Score[5];
-						if (Sum[i] == sum) {	//½«ÅÅºÃĞòµÄ×Ü·ÖÓëÔ­À´µÄ×Ü·ÖÆ¥Åä£¬²¢ÏÔÊ¾
+						if (Sum[i] == sum) {	//å°†æ’å¥½åºçš„æ€»åˆ†ä¸åŸæ¥çš„æ€»åˆ†åŒ¹é…ï¼Œå¹¶æ˜¾ç¤º
 							printf("%d\t%d\t%s\t%s\t%d\t%-16s", i + 1, info[j].Idnumber, info[j].Name, info[j].Sex, info[j].Age, info[j].Hometown);
 							printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n", info[j].Score[0], info[j].Score[1], info[j].Score[2], info[j].Score[3], info[j].Score[4], info[j].Score[5], sum);
 						}
 					}
 				}
 				system("pause");
-				printf("\t\t\t		¼´½«·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		å³å°†è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else if (choice == 2) {
-				for (int i = 0;i < count;i++) {	//½«Ñ§ºÅÈ¡³öµ½B[]£¬²¢½øĞĞÅÅĞò£¬ÓÉµÍµ½¸ß
+				for (int i = 0;i < count;i++) {	//å°†å­¦å·å–å‡ºåˆ°B[]ï¼Œå¹¶è¿›è¡Œæ’åºï¼Œç”±ä½åˆ°é«˜
 					for (int j = 0;j < count - 1;j++) {
 						if (B[j] > B[j + 1]) {
 							int temp = B[j];
@@ -877,79 +879,79 @@ void ShowAllInfo() {
 					}
 				}
 				system("cls");
-				printf("\n\n\t\t\t		ÕâÊÇÈ«²¿µÄÑ§ÉúĞÅÏ¢,°´ÕÕÑ§ºÅÅÅĞò,Ò»¹²%dÎ»\n\n", count);
-				printf("ĞòºÅ\tÑ§ºÅ\tĞÕÃû\tĞÔ±ğ\tÄêÁä\t¼ÒÍ¥×¡Ö·\tÓïÎÄ\tÊıÑ§\tÓ¢Óï\tÎïÀí\t»¯Ñ§\tÉúÎï\t×Ü·Ö\n");
+				printf("\n\n\t\t\t		è¿™æ˜¯å…¨éƒ¨çš„å­¦ç”Ÿä¿¡æ¯,æŒ‰ç…§å­¦å·æ’åº,ä¸€å…±%dä½\n\n", count);
+				printf("åºå·\tå­¦å·\tå§“å\tæ€§åˆ«\tå¹´é¾„\tå®¶åº­ä½å€\tè¯­æ–‡\tæ•°å­¦\tè‹±è¯­\tç‰©ç†\tåŒ–å­¦\tç”Ÿç‰©\tæ€»åˆ†\n");
 				for (int i = 0;i < count;i++) {
 					for (int j = 0;j < count;j++) {
-						if (B[i] == info[j].Idnumber) {	//½«ÅÅºÃĞòµÄÑ§ºÅÓëÔ­À´µÄÑ§ºÅÆ¥Åä£¬²¢ÏÔÊ¾
+						if (B[i] == info[j].Idnumber) {	//å°†æ’å¥½åºçš„å­¦å·ä¸åŸæ¥çš„å­¦å·åŒ¹é…ï¼Œå¹¶æ˜¾ç¤º
 							printf("%d\t%d\t%s\t%s\t%d\t%-16s", i + 1, info[j].Idnumber, info[j].Name, info[j].Sex, info[j].Age, info[j].Hometown);
 							printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n", info[j].Score[0], info[j].Score[1], info[j].Score[2], info[j].Score[3], info[j].Score[4], info[j].Score[5], Sum[j]);
 						}
 					}
 				}
 				system("pause");
-				printf("\t\t\t		¼´½«·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		å³å°†è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else if (choice == 3) {
-				printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+				printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 				system("pause");
 				InputChoice();
 			}
 			else {
-				printf("\t\t\t		ÇëÊäÈë1¡¢2»ò3£¡\n");
+				printf("\t\t\t		è¯·è¾“å…¥1ã€2æˆ–3ï¼\n");
 				system("pause");
 			}
 		}
 	}
 	else {
-		printf("\t\t\t		ÏµÍ³ÖĞÃ»ÓĞÈÎºÎĞÅÏ¢£¡\n");
+		printf("\t\t\t		ç³»ç»Ÿä¸­æ²¡æœ‰ä»»ä½•ä¿¡æ¯ï¼\n");
 		system("pause");
-		printf("\t\t\t		ÕıÔÚ·µ»ØÖ÷²Ëµ¥\n");
+		printf("\t\t\t		æ­£åœ¨è¿”å›ä¸»èœå•\n");
 		system("pause");
 		InputChoice();
 	}
 }
-//±£´æÄ£¿é
+//ä¿å­˜æ¨¡å—
 void Save() {
 	FILE* fp1;
 	FILE* fp2;
 	if ((fp1 = fopen("StudentScore.txt", "w")) == NULL) {
-		printf("\t\t\t		ÎŞ·¨´ò¿ªÎÄ¼ş£¡\n");
+		printf("\t\t\t		æ— æ³•æ‰“å¼€æ–‡ä»¶ï¼\n");
 		exit(0);
 	}
 	for (int i = 0;i < count;i++) {
 		fprintf(fp1, " %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", info[i].Num, info[i].Idnumber, info[i].Score[0], info[i].Score[1], info[i].Score[2], info[i].Score[3], info[i].Score[4], info[i].Score[5]);
 	}
 	if (fclose(fp1)) {
-		printf("\t\t\t		ÎŞ·¨¹Ø±ÕÎÄ¼ş£¡\n");
+		printf("\t\t\t		æ— æ³•å…³é—­æ–‡ä»¶ï¼\n");
 		exit(0);
 	}
-	//Ñ§Éú»ù±¾ĞÅÏ¢ÎÄ¼ş
+	//å­¦ç”ŸåŸºæœ¬ä¿¡æ¯æ–‡ä»¶
 	if ((fp2 = fopen("StudentInfo.txt", "w")) == NULL) {
-		printf("\t\t\t		ÎŞ·¨´ò¿ªÎÄ¼ş£¡\n");
+		printf("\t\t\t		æ— æ³•æ‰“å¼€æ–‡ä»¶ï¼\n");
 		exit(0);
 	}
 	for (int i = 0;i < count;i++) {
 		fprintf(fp2, "%d\t%s\t%s\t%s\t%d\n", info[i].Idnumber, info[i].Name, info[i].Sex, info[i].Hometown, info[i].Age);
 	}
 	if (fclose(fp2)) {
-		printf("\t\t\t		ÎŞ·¨¹Ø±ÕÎÄ¼ş£¡\n");
+		printf("\t\t\t		æ— æ³•å…³é—­æ–‡ä»¶ï¼\n");
 		exit(0);
 	}
 }
-//ÎÊºòÄ£¿é£¬ÓÃÓÚ¿ªÊ¼ºÍ½áÊø
-void Greeting(int i) {	//´«µİ²ÎÊıÓÃÓÚÇø·Ö¿ªÊ¼Óë½áÊø
+//é—®å€™æ¨¡å—ï¼Œç”¨äºå¼€å§‹å’Œç»“æŸ
+void Greeting(int i) {	//ä¼ é€’å‚æ•°ç”¨äºåŒºåˆ†å¼€å§‹ä¸ç»“æŸ
 	if (i) {
 		system("cls");
 		printf("\n\n");
-		printf("\t\t\t		»¶Ó­Ê¹ÓÃÑ§ÉúĞÅÏ¢¹ÜÀíÏµÍ³\n");
+		printf("\t\t\t		æ¬¢è¿ä½¿ç”¨å­¦ç”Ÿä¿¡æ¯ç®¡ç†ç³»ç»Ÿ\n");
 		system("pause");
 	}
 	else {
 		printf("\n\n");
-		printf("\t\t\t		ÆÚ´ıÔÙ´ÎÊ¹ÓÃÑ§ÉúĞÅÏ¢¹ÜÀíÏµÍ³\n");
+		printf("\t\t\t		æœŸå¾…å†æ¬¡ä½¿ç”¨å­¦ç”Ÿä¿¡æ¯ç®¡ç†ç³»ç»Ÿ\n");
 		system("pause");
 		exit(0);
 	}
